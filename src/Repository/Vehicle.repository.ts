@@ -12,6 +12,12 @@ export const VehicleRepository = {
 
     },
 
+    async getVehicleById(id:number):Promise<Vehicle|null>{
+        const query = `SELECT * FROM vehicles WHERE id = $1`
+        const result = await pool.query(query,[id]);
+        return result.rows[0];
+    },
+
     async addVehicle(data:Vehicle):Promise<Vehicle|null>{
         
         const {vehicle_name,type,registration_number,daily_rent_price,availability_status} = data
@@ -31,6 +37,13 @@ export const VehicleRepository = {
 
         const result = await pool.query(query,[vehicle_name,type,registration_number,daily_rent_price,availability_status,id]) ;
 
+        return result.rows[0];
+    },
+    
+    async deleteVehicle(id:number):Promise<Vehicle|null>{
+        
+        const query = `DELETE FROM vehicles WHERE id = $1 RETURNING *` ;
+        const result = await pool.query(query,[id]) ;
         return result.rows[0];
     }
 }

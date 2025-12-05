@@ -4,6 +4,7 @@ import { VehicleService } from "../Services/Vehicle.service";
 export const VehicleController = {
 
     async getVehicles(req:Request,res:Response){
+
         try {
             
             const result = await VehicleService.getVehicles();
@@ -24,8 +25,31 @@ export const VehicleController = {
     
         }
     },
+    async getVehicleById(req:Request,res:Response){
+
+        try {
+            
+            const result = await VehicleService.getVehicleById(Number(req.params.vehicleId));
+
+            res.status(200).send({
+                success : true,
+                message : `Vehicle retrieved successfully`,
+                data : result
+            })
+        } catch (error) {
+            console.error(`Failed to retrieve Vehicle`,error);
+            res.status(500).send({
+                success : false,
+                message : `Failed to retrieve Vehicle data`,
+                error : error
+            })
+        
+    
+        }
+    },
 
     async addVehicle(req:Request,res:Response){
+
         try {
             
             const result = await VehicleService.addVehicle(req.body);
@@ -45,6 +69,7 @@ export const VehicleController = {
         }
     },
     async updateVehicle(req:Request,res:Response){
+
         try {
             
             const result = await VehicleService.updateVehicle(req.body,Number(req.params.vehicleId));
@@ -62,5 +87,26 @@ export const VehicleController = {
                 error : error
             })
         }
-    }
+    },
+
+    async deleteVehicle(req:Request,res:Response){
+        
+        try {
+            
+            const result = await VehicleService.deleteVehicle(Number(req.params.vehicleId));
+
+            res.status(200).send({
+                success : true,
+                message : `Vehicle deleted successfully`,
+                data : result
+            })
+        } catch (error) {
+            console.error(`Failed to delete Vehicle`,error);
+            res.status(500).send({
+                success : false,
+                message : `Failed to delete Vehicle data`,
+                error : error
+            })
+        }
+    },
 }
