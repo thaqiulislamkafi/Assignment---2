@@ -25,15 +25,15 @@ export const userController = {
 
     },
 
-    async userLogin(req:Request,res:Response){
+    async userLogin(req: Request, res: Response) {
 
         try {
 
-            const result = await userService.userLogin(req.body,res);
+            const result = await userService.userLogin(req.body, res);
 
             res.status(201).send({
                 success: true,
-                message: `Login successful successfully`,
+                message: `Login successful`,
                 data: result
             })
         } catch (error) {
@@ -44,5 +44,47 @@ export const userController = {
                 error: error
             })
         }
-    }
+    },
+
+    async userUpdate(req: Request, res: Response) {
+
+        try {
+
+            const result = await userService.userUpdate(req.body,Number(req.params.userId));
+
+            res.status(201).send({
+                success: true,
+                message: `User updated successfully`,
+                data: result
+            })
+        } catch (error) {
+            console.error(`Failed to Update User`, error);
+            res.status(500).send({
+                success: false,
+                message: `Failed to Update User`,
+                error: error
+            })
+        }
+    },
+
+    async deleteUser(req: Request, res: Response) {
+
+        try {
+
+            const result = await userService.deleteUser(Number(req.params.userId));
+
+            res.status(201).send({
+                success: true,
+                message: `User deleted successfully`,
+                data: result
+            })
+        } catch (error) {
+            console.error(`Failed to Delete User`, error);
+            res.status(500).send({
+                success: false,
+                message: `Failed to Delete User`,
+                error: error
+            })
+        }
+    },
 }

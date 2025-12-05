@@ -13,5 +13,15 @@ export const userService = {
 
     async userLogin(data:User,res:Response){
         return await UserRepository.loginUser(data,res);
+    },
+
+    async userUpdate(data:User,id:number){
+        return await UserRepository.updateUser(data,id);
+    },
+
+    async deleteUser(id:number){
+        return await UserRepository.deleteUser(id) ;
     }
+
+
 }

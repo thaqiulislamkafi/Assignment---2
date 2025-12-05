@@ -30,5 +30,23 @@ export const UserRepository = {
         else if (result.rows[0].password == password) {
             return result.rows[0];
         }
+    },
+
+    async updateUser (data:User,id:number){
+
+        const {name,email,phone,role} = data ;
+
+        const query = `UPDATE users SET name=$1,email=$2,phone=$3,role=$4 WHERE id=$5 RETURNING *`
+
+        const result = await pool.query(query,[name,email,phone,role,id]) ;
+
+        return result.rows[0] ;
+
+    },
+
+    async deleteUser(id:number){
+        const query = `DELETE FROM users WHERE id = $1 RETURNING *` ;
+        const result = await pool.query(query,[id]) ;
+        return result.rows[0];
     }
 }
