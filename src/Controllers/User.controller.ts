@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "../Services/User.service";
+import { tokenGeneration } from "../Helper/tokenGeneration";
 
 export const userController = {
 
@@ -31,9 +32,12 @@ export const userController = {
 
             const result = await userService.userLogin(req.body, res);
 
+            const token = tokenGeneration(result);
+        
             res.status(201).send({
                 success: true,
                 message: `Login successful`,
+                token : token,
                 data: result
             })
         } catch (error) {
@@ -41,6 +45,27 @@ export const userController = {
             res.status(500).send({
                 success: false,
                 message: `Failed to User Login`,
+                error: error
+            })
+        }
+    },
+
+    async getAllUsers(req: Request, res: Response){
+
+        try {
+
+            const result = await userService.getAllUsers();
+            res.status(200).send({
+                success : true,
+                message : `Users retrieved successfully`,
+                data:result
+            }) 
+            
+        } catch (error) {
+            console.error(`Failed to get all Users`, error);
+            res.status(500).send({
+                success: false,
+                message: `Failed to get all Users`,
                 error: error
             })
         }

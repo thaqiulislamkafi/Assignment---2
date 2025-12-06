@@ -22,13 +22,13 @@ export const BookingController = {
                 message: `Booking created successfully`,
                 data: result
             })
-        } catch (error) {
+        } catch (error:any) {
 
             console.error(`Failed to add Booking`, error);
             res.status(500).send({
                 success: false,
                 message: `Failed to add Booking data`,
-                error: error
+                error: error.message
             })
         }
     },

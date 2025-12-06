@@ -4,6 +4,8 @@ import { VehicleController } from './Controllers/Vehicle.controller';
 import cors from 'cors'
 import { userController } from './Controllers/User.controller';
 import { BookingController } from './Controllers/Booking.controller';
+import { verifyAuth } from './Middleware/VerifyAuth';
+import { VerifyAdmin } from './Middleware/VerifyAdmin';
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -17,15 +19,17 @@ app.get('/',(req:Request,res:Response)=>{
 
 app.post('/api/v1/auth/signup',userController.userRegistration);
 app.post('/api/v1/auth/signin',userController.userLogin);
+
+app.get('/api/v1/users',verifyAuth,VerifyAdmin,userController.getAllUsers);
 app.put('/api/v1/users/:userId',userController.userUpdate);
 app.delete('/api/v1/users/:userId',userController.deleteUser)
 
 app.get('/api/v1/vehicles',VehicleController.getVehicles);
 app.get(`/api/v1/vehicles/:vehicleId`,VehicleController.getVehicleById)
 
-app.post('/api/v1/vehicles',VehicleController.addVehicle);
-app.put('/api/v1/vehicles/:vehicleId',VehicleController.updateVehicle)
-app.delete('/api/v1/vehicles/:vehicleId',VehicleController.deleteVehicle) ;
+app.post('/api/v1/vehicles',verifyAuth,VerifyAdmin,VehicleController.addVehicle);
+app.put('/api/v1/vehicles/:vehicleId',verifyAuth,VerifyAdmin,VehicleController.updateVehicle)
+app.delete('/api/v1/vehicles/:vehicleId',verifyAuth,VerifyAdmin,VehicleController.deleteVehicle) ;
 
 app.post('/api/v1/bookings',BookingController.addBooking);
 

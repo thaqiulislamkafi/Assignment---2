@@ -32,6 +32,14 @@ export const UserRepository = {
         }
     },
 
+    async getAllUsers ():Promise<User[]>{
+
+        const query = `SELECT * FROM users`
+        const result = await pool.query(query) ;
+        return result.rows ;
+
+    },
+
     async updateUser (data:User,id:number){
 
         const {name,email,phone,role} = data ;
