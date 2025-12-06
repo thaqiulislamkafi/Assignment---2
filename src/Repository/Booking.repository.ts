@@ -5,11 +5,20 @@ import { Vehicle } from "../Models/Vehicles";
 
 export const BookingRepository = {
 
-    async getAllBookings() {
+    async getAllBookings(): Promise<Booking[]> {
+
+        const query = `SELECT * FROM bookings ORDER BY id ASC`
+        const result = await pool.query(query);
+        console.log(result.rows) ;
+        return result.rows;
 
     },
 
-    async getBookingById() {
+    async getBookingById(id:number):Promise<Booking[]|null> {
+
+        const query = `SELECT * FROM bookings WHERE customer_id=$1`;
+        const result = await pool.query(query,[id]);
+        return result.rows
 
     },
 
@@ -52,6 +61,7 @@ export const BookingRepository = {
 
     async updateBooking() {
 
+        
     },
     async deleteBooking() {
 

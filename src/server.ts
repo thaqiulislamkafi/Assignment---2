@@ -6,6 +6,8 @@ import { userController } from './Controllers/User.controller';
 import { BookingController } from './Controllers/Booking.controller';
 import { verifyAuth } from './Middleware/VerifyAuth';
 import { VerifyAdmin } from './Middleware/VerifyAdmin';
+import { VerifyAdminOrOwner } from './Middleware/VerifyAdminOrOwner';
+import { RoleBasedView } from './Middleware/RoleBasedView';
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -21,8 +23,8 @@ app.post('/api/v1/auth/signup',userController.userRegistration);
 app.post('/api/v1/auth/signin',userController.userLogin);
 
 app.get('/api/v1/users',verifyAuth,VerifyAdmin,userController.getAllUsers);
-app.put('/api/v1/users/:userId',userController.userUpdate);
-app.delete('/api/v1/users/:userId',userController.deleteUser)
+app.put('/api/v1/users/:userId',verifyAuth,VerifyAdminOrOwner,userController.userUpdate);
+app.delete('/api/v1/users/:userId',verifyAuth,VerifyAdmin,userController.deleteUser)
 
 app.get('/api/v1/vehicles',VehicleController.getVehicles);
 app.get(`/api/v1/vehicles/:vehicleId`,VehicleController.getVehicleById)
@@ -31,7 +33,8 @@ app.post('/api/v1/vehicles',verifyAuth,VerifyAdmin,VehicleController.addVehicle)
 app.put('/api/v1/vehicles/:vehicleId',verifyAuth,VerifyAdmin,VehicleController.updateVehicle)
 app.delete('/api/v1/vehicles/:vehicleId',verifyAuth,VerifyAdmin,VehicleController.deleteVehicle) ;
 
-app.post('/api/v1/bookings',BookingController.addBooking);
+app.get('/api/v1/bookings',verifyAuth,RoleBasedView) ;
+app.post('/api/v1/bookings',verifyAuth,BookingController.addBooking) ;
 
 
 app.listen(PORT,()=>{

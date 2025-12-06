@@ -4,11 +4,11 @@ import { BookingRepository } from "../Repository/Booking.repository";
 export const BookingService = {
 
     async getAllBookings() {
-
+        return await BookingRepository.getAllBookings() ;
     },
 
-    async getBookingById() {
-
+    async getBookingById(id:number) {
+        return await BookingRepository.getBookingById(id)
     },
 
     async addBooking(data: Booking) {
