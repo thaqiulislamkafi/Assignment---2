@@ -64,7 +64,7 @@ A secure and scalable **Vehicle Booking REST API** built using **TypeScript, Exp
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/thaqiulislamkafi/Assignment---2.git
 cd your-repo-name
 ```
 
