@@ -66,11 +66,48 @@ export const BookingController = {
         }
     },
 
-    async updateBooking() {
+    async updateBooking(req: Request, res: Response) {
 
+        try {
+            
+            const result = await BookingService.updateBooking(Number(req.params.bookingId)) ;
+            res.status(200).send({
+                success: true,
+                message: `Booking marked as returned. Vehicle is now available`,
+                data: result
+            })
+
+        } catch (error:any) {
+            
+            console.error(`Failed to Update Booking`, error);
+            res.status(500).send({
+                success: false,
+                message: `Failed to Update Booking data`,
+                error: error.message
+            })
+
+        }
 
     },
-    async deleteBooking() {
 
+    async cancelBooking(req: Request, res: Response) {
+
+        try {
+
+            const result = await BookingService.cancelBooking(Number(req.params.bookingId)) ;
+            res.status(200).send({
+                success: true,
+                message: `Booking Cancelled successfully`,
+                data: result
+            })
+
+        } catch (error:any) {
+            console.error(`Failed to Cancelled Booking`, error);
+            res.status(500).send({
+                success: false,
+                message: `Failed to Cancelled Booking data`,
+                error: error.message
+            })
+        }
     }
 }

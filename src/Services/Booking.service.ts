@@ -18,10 +18,11 @@ export const BookingService = {
         return await BookingRepository.addBooking(data);
     },
 
-    async updateBooking() {
-
+    async updateBooking(id:number) {
+        return BookingRepository.updateBooking(id);
     },
-    async deleteBooking() {
 
+    async cancelBooking(id:number) {
+        return BookingRepository.cancelBooking(id)
     }
 }

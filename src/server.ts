@@ -8,6 +8,7 @@ import { verifyAuth } from './Middleware/VerifyAuth';
 import { VerifyAdmin } from './Middleware/VerifyAdmin';
 import { VerifyAdminOrOwner } from './Middleware/VerifyAdminOrOwner';
 import { RoleBasedView } from './Middleware/RoleBasedView';
+import { VerifyAdminOrCustomer } from './Middleware/VerifyAdminOrCustomer';
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -35,6 +36,7 @@ app.delete('/api/v1/vehicles/:vehicleId',verifyAuth,VerifyAdmin,VehicleControlle
 
 app.get('/api/v1/bookings',verifyAuth,RoleBasedView) ;
 app.post('/api/v1/bookings',verifyAuth,BookingController.addBooking) ;
+app.put('/api/v1/bookings/:bookingId',verifyAuth,VerifyAdminOrCustomer);
 
 
 app.listen(PORT,()=>{

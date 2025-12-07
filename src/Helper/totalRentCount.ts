@@ -1,5 +1,4 @@
 
-
 export const totalRentCount = (start: string, end: string, daily_rent_price: number): number => {
 
     const begin = new Date(start);
@@ -9,4 +8,5 @@ export const totalRentCount = (start: string, end: string, daily_rent_price: num
 
     const totalPrice  = totalDays * Number(daily_rent_price) ;
     return totalPrice ;
+    
 }
