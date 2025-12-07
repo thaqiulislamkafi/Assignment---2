@@ -1,6 +1,8 @@
 import { Response } from "express";
 import { pool } from "../Config/db";
 import { User } from "../Models/User";
+import { hashPassword } from "../Helper/hashPassword";
+import { comparePassword } from "../Helper/comparePassword";
 
 export const UserRepository = {
 
@@ -8,9 +10,11 @@ export const UserRepository = {
 
         const {name,email,password,phone,role} = data ;
 
+        const hashedPassword = await hashPassword(password) ;
+
         const query = `INSERT INTO users(name,email,password,phone,role) VALUES ($1,$2,$3,$4,$5) RETURNING *`
 
-        const result = await pool.query(query,[name,email,password,phone,role]) ;
+        const result = await pool.query(query,[name,email,hashedPassword,phone,role]) ;
 
         return result.rows[0] ;
     },
@@ -27,8 +31,11 @@ export const UserRepository = {
                 message : `Email doesn't match`
             })
 
-        else if (result.rows[0].password == password) {
-            return result.rows[0];
+        else if (result.rows[0].password) {
+            const isMatch:boolean = await comparePassword(password,result.rows[0].password)
+
+            if(isMatch)
+                return result.rows[0]
         }
     },
 
