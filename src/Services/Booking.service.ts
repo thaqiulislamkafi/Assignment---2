@@ -11,6 +11,14 @@ export const BookingService = {
         return await BookingRepository.getBookingById(id)
     },
 
+    async getBookingsByVehicleId(vehicleId:number){
+        return await BookingRepository.getBookingsByVehicleId(vehicleId) ;
+    },
+
+    async getBookingsByUserId(userId:number){
+        return await BookingRepository.getBookingsByUserId(userId) ;
+    },
+
     async addBooking(data: Booking) {
         if (!data.customer_id || !data.vehicle_id)
             throw new Error(`Vehicle id and customer id are required`);

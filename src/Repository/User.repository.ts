@@ -29,13 +29,15 @@ export const UserRepository = {
             return res.status(404).send({
                 success:false,
                 message : `Email doesn't match`
-            })
+            }) ;
 
         else if (result.rows[0].password) {
             const isMatch:boolean = await comparePassword(password,result.rows[0].password)
-
-            if(isMatch)
-                return result.rows[0]
+            console.log(isMatch) ;
+            if(isMatch) {
+                return result.rows[0] ;
+            }
+                
         }
     },
 

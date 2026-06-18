@@ -1,25 +1,26 @@
 import { Request, Response } from "express";
 import { userService } from "../Services/User.service";
 import { tokenGeneration } from "../Helper/tokenGeneration";
+import { User } from "../Models/User";
 
 export const userController = {
 
-    async userRegistration(req: Request, res: Response) {
+    async userRegistration(req: Request<{},{},User>, res: Response) {
 
         try {
 
-            const result = await userService.userRegistration(req.body);
+            const result: (User | null) = await userService.userRegistration(req.body);
 
             res.status(201).send({
                 success: true,
                 message: `User registered successfully`,
                 data: result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to User register`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to User register`,
+                message:  error.message || `Failed to User register`,
                 error: error
             })
         }
@@ -30,9 +31,9 @@ export const userController = {
 
         try {
 
-            const result = await userService.userLogin(req.body, res);
+            const result = await userService.userLogin(req.body, res); 
 
-            const token = tokenGeneration(result);
+            const token:string = tokenGeneration(result);
         
             res.status(201).send({
                 success: true,
@@ -40,11 +41,11 @@ export const userController = {
                 token : token,
                 data: result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to User Login`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to User Login`,
+                message: error.message || `Failed to User Login`,
                 error: error
             })
         }
@@ -54,18 +55,18 @@ export const userController = {
 
         try {
 
-            const result = await userService.getAllUsers();
+            const result:User[] = await userService.getAllUsers();
             res.status(200).send({
                 success : true,
                 message : `Users retrieved successfully`,
                 data:result
             }) 
             
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to get all Users`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to get all Users`,
+                message: error.message || `Failed to get all Users`,
                 error: error
             })
         }
@@ -75,18 +76,18 @@ export const userController = {
 
         try {
 
-            const result = await userService.userUpdate(req.body,Number(req.params.userId));
+            const result:User = await userService.userUpdate(req.body,Number(req.params.userId));
 
             res.status(201).send({
                 success: true,
                 message: `User updated successfully`,
                 data: result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to Update User`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to Update User`,
+                message: error.message || `Failed to Update User`,
                 error: error
             })
         }
@@ -96,18 +97,18 @@ export const userController = {
 
         try {
 
-            const result = await userService.deleteUser(Number(req.params.userId));
+            const result:User = await userService.deleteUser(Number(req.params.userId));
 
             res.status(201).send({
                 success: true,
                 message: `User deleted successfully`,
                 data: result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to Delete User`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to Delete User`,
+                message: error.message || `Failed to Delete User`,
                 error: error
             })
         }

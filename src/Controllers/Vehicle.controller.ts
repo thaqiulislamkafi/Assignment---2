@@ -14,11 +14,11 @@ export const VehicleController = {
                 message : `Vehicles retrieved successfully`,
                 data : result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to retrieve Vehicles`,error);
             res.status(500).send({
                 success : false,
-                message : `Failed to retrieve Vehicles data`,
+                message : error.message || `Failed to retrieve Vehicles data`,
                 error : error
             })
         
@@ -36,11 +36,11 @@ export const VehicleController = {
                 message : `Vehicle retrieved successfully`,
                 data : result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to retrieve Vehicle`,error);
             res.status(500).send({
                 success : false,
-                message : `Failed to retrieve Vehicle data`,
+                message : error.message || `Failed to retrieve Vehicle data`,
                 error : error
             })
         
@@ -59,11 +59,11 @@ export const VehicleController = {
                 message : `Vehicle created successfully`,
                 data : result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to add Vehicle`,error);
             res.status(500).send({
                 success : false,
-                message : `Failed to add Vehicle data`,
+                message : error.message || `Failed to add Vehicle data`,
                 error : error
             })
         }
@@ -79,11 +79,11 @@ export const VehicleController = {
                 message : `Vehicle updated successfully`,
                 data : result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to updated Vehicle`,error);
             res.status(500).send({
                 success : false,
-                message : `Failed to updated Vehicle data`,
+                message : error.message || `Failed to updated Vehicle data`,
                 error : error
             })
         }
@@ -100,11 +100,11 @@ export const VehicleController = {
                 message : `Vehicle deleted successfully`,
                 data : result
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to delete Vehicle`,error);
             res.status(500).send({
                 success : false,
-                message : `Failed to delete Vehicle data`,
+                message : error.message || `Failed to delete Vehicle data`,
                 error : error
             })
         }

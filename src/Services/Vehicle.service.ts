@@ -11,8 +11,6 @@ export const VehicleService = {
         return await VehicleRepository.getVehicleById(id) ; 
     },
 
-
-
     async addVehicle(data:Vehicle){
         if(!data.vehicle_name)
              throw new Error(`Vehicle name required`);
@@ -25,6 +23,12 @@ export const VehicleService = {
     },
 
     async deleteVehicle(id:number){
+
+        const isVehicleExist = await VehicleService.getVehicleById(id) ;
+
+        if(isVehicleExist) 
+            throw new Error('Vehicle is Existing in Bookings, dont deleted') ;
+
         return await VehicleRepository.deleteVehicle(id) ;
     },
 }

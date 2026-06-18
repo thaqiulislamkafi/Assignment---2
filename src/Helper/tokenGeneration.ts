@@ -4,7 +4,7 @@ import { User } from '../Models/User'
 import dotenv from 'dotenv'
 dotenv.config() ;
 
- export const tokenGeneration = (data:User)=>{
+ export const tokenGeneration = (data:User):string=>{
 
     const secret_key = process.env.SECRET_KEY ;
 

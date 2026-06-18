@@ -14,11 +14,11 @@ export const BookingController = {
                 data: result
             })
 
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to retrieve Bookings`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to retrieve Bookings data`,
+                message:  error.message || `Failed to retrieve Bookings data`,
                 error: error
             })
         }
@@ -34,11 +34,11 @@ export const BookingController = {
                 data: result
             })
 
-        } catch (error) {
+        } catch (error:any) {
             console.error(`Failed to retrieve Bookings`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to retrieve Bookings data`,
+                message:  error.message || `Failed to retrieve Bookings data`,
                 error: error
             })
         }
@@ -60,7 +60,7 @@ export const BookingController = {
             console.error(`Failed to add Booking`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to add Booking data`,
+                message:  error.message || `Failed to add Booking data`,
                 error: error.message
             })
         }
@@ -82,7 +82,7 @@ export const BookingController = {
             console.error(`Failed to Update Booking`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to Update Booking data`,
+                message:  error.message || `Failed to Update Booking data`,
                 error: error.message
             })
 
@@ -105,7 +105,7 @@ export const BookingController = {
             console.error(`Failed to Cancelled Booking`, error);
             res.status(500).send({
                 success: false,
-                message: `Failed to Cancelled Booking data`,
+                message:  error.message || `Failed to Cancelled Booking data`,
                 error: error.message
             })
         }

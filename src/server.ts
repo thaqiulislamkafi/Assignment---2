@@ -18,7 +18,7 @@ initDB()
 
 app.get('/',(req:Request,res:Response)=>{
     res.status(200).send(`Server is on going Successfully`);
-})
+}) ;
 
 app.post('/api/v1/auth/signup',userController.userRegistration);
 app.post('/api/v1/auth/signin',userController.userLogin);

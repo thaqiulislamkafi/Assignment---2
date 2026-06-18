@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { User } from "../Models/User";
 import { UserRepository } from "../Repository/User.repository";
+import { BookingService } from "./Booking.service";
 
 export const userService = {
 
@@ -24,6 +25,10 @@ export const userService = {
     },
 
     async deleteUser(id:number){
+
+        const ifUserExist = await BookingService.getBookingsByUserId(id) ;
+        if(ifUserExist) 
+            throw new Error('Users have booking, dont deleted')
         return await UserRepository.deleteUser(id) ;
     }
 
