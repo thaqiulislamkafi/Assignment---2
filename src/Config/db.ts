@@ -1,5 +1,6 @@
 import pg, { Pool } from 'pg'
 import dotenv from 'dotenv'
+import { autoReturnBookings } from '../Helper/autoReturn';
 dotenv.config()
 
 export const pool = new Pool({
@@ -44,6 +45,7 @@ export const initDB = async()=>{
 
         await pool.query(query3);
         console.log(`Table Created`) ;
+        await autoReturnBookings() ;
         
     } catch (error) {
         console.log(`Filed to connect with neonDB`,error)

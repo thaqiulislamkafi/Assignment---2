@@ -1,3 +1,4 @@
+import { QueryResult } from "pg";
 import { pool } from "../Config/db";
 import { formattingAdminView } from "../Helper/formattingAdminView";
 import { formattingUserView } from "../Helper/formattingUserView";
@@ -17,13 +18,13 @@ export const BookingRepository = {
 
     },
 
-    async getBookingById(id: number): Promise<Booking[] | null> {
+    async getBookingById(id: number): Promise<Booking> {
 
-        const query = `SELECT b.id,b.vehicle_id,b.rent_start_date,b.rent_end_date, b.total_price, b.status, v.vehicle_name,v.registration_number,v.type FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE customer_id=$1`;
+        const query = `SELECT b.id,b.vehicle_id,b.rent_start_date,b.rent_end_date, b.total_price, b.status, v.vehicle_name,v.registration_number,v.type FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE b.id=$1`;
 
         const result = await pool.query(query, [id]);
         const finalResult = formattingUserView(result.rows);
-        return finalResult;
+        return finalResult[0];
 
     },
 

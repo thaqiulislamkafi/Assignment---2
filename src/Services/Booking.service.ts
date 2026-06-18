@@ -4,19 +4,19 @@ import { BookingRepository } from "../Repository/Booking.repository";
 export const BookingService = {
 
     async getAllBookings() {
-        return await BookingRepository.getAllBookings() ;
+        return await BookingRepository.getAllBookings();
     },
 
-    async getBookingById(id:number) {
+    async getBookingById(id: number) {
         return await BookingRepository.getBookingById(id)
     },
 
-    async getBookingsByVehicleId(vehicleId:number){
-        return await BookingRepository.getBookingsByVehicleId(vehicleId) ;
+    async getBookingsByVehicleId(vehicleId: number) {
+        return await BookingRepository.getBookingsByVehicleId(vehicleId);
     },
 
-    async getBookingsByUserId(userId:number){
-        return await BookingRepository.getBookingsByUserId(userId) ;
+    async getBookingsByUserId(userId: number) {
+        return await BookingRepository.getBookingsByUserId(userId);
     },
 
     async addBooking(data: Booking) {
@@ -26,11 +26,19 @@ export const BookingService = {
         return await BookingRepository.addBooking(data);
     },
 
-    async updateBooking(id:number) {
+    async updateBooking(id: number) {
         return BookingRepository.updateBooking(id);
     },
 
-    async cancelBooking(id:number) {
+    async cancelBooking(id: number) {
+
+        const isBookedExist: Booking = await BookingRepository.getBookingById(id);
+        const startDate = new Date(isBookedExist.rent_start_date);
+
+        if (new Date() >= startDate) {
+            throw new Error("Cannot cancel after rental period starts");
+        }
+        
         return BookingRepository.cancelBooking(id)
     }
 }
